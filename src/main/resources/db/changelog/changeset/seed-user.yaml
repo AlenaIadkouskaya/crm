@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Alena Iadkouskaya
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: admin@admin.com
+              - column:
+                  name: password
+                  value: "$2a$10$DowJ65EM6f53cqHDexk4zehv7qDjGIGcvllAvQJExuTtM68xQSWvC"

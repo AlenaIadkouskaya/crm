@@ -4,12 +4,12 @@ spring:
   application:
     name: crm
   datasource:
-    username: root
-    password: root
+    username: postgres
+    password: admin
     url: jdbc:postgresql://localhost:5432/crm_system
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
   liquibase:
     enabled: true

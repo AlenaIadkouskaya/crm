@@ -1,8 +1,12 @@
 package com.iadkouskaya.crm.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+
+@NoArgsConstructor
 @Table(name = "users")
 public class User {
     @Id
@@ -14,4 +18,12 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

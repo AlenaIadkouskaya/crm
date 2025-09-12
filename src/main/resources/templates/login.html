@@ -18,8 +18,8 @@
                 <div class="card-body">
                     <form method="post" th:action="@{/login}">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Email</label>
-                            <input type="text" name="username" class="form-control" id="username" required>
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" name="email" class="form-control" id="email" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Hasło</label>
@@ -27,7 +27,9 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">Zaloguj się</button>
+
                     </form>
+
                 </div>
                 <div class="card-footer text-center">
                     <p th:if="${param.error}" class="text-danger">Nieprawidłowy login lub hasło</p>

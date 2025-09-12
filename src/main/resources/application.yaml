@@ -14,3 +14,13 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+upload:
+  dir: files/logos
+app:
+  pagination:
+    page-size: 5

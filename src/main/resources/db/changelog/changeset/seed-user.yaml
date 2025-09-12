@@ -11,4 +11,4 @@ databaseChangeLog:
                   value: admin@admin.com
               - column:
                   name: password
-                  value: "$2a$10$DowJ65EM6f53cqHDexk4zehv7qDjGIGcvllAvQJExuTtM68xQSWvC"
+                  value: "$2a$04$FR4VfImqecrxiAG24mY2wOze0yx2.vUfJDycgQ4/HZjvsci/xJubK"

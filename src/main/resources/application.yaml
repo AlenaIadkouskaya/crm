@@ -4,9 +4,10 @@ spring:
   application:
     name: crm
   datasource:
-    username: postgres
-    password: admin
-    url: jdbc:postgresql://localhost:5432/crm_system
+    username: crm_system_59u0_user
+    password: XpxNsoQIRYHnF8FdbQ0lTXmrziQbWDX7
+#    url: jdbc:postgresql://localhost:5432/crm_system
+    url: jdbc:postgresql://dpg-d32hklidbo4c73aelrq0-a:5432/crm_system_59u0
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,6 +15,8 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+thymeleaf:
+  cache: false
 logging:
   level:
     org:

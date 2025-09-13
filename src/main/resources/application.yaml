@@ -5,8 +5,8 @@ spring:
   application:
     name: crm
   datasource:
-#    username: ${SPRING_DATASOURCE_USERNAME}
-#    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 #    username: crm_system_59u0_user
 #    password: XpxNsoQIRYHnF8FdbQ0lTXmrziQbWDX7
 #    url: jdbc:postgresql://localhost:5432/crm_system

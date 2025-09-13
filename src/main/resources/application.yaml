@@ -1,5 +1,6 @@
 server:
-  port: 8066
+  port: ${PORT:8080}
+#  port: 8066
 spring:
   application:
     name: crm

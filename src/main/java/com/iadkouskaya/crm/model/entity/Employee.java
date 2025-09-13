@@ -2,7 +2,7 @@ package com.iadkouskaya.crm.model.entity;
 
 import jakarta.persistence.*;
 
-@Entity
+//@Entity
 @Table(name = "employees")
 public class Employee {
     @Id

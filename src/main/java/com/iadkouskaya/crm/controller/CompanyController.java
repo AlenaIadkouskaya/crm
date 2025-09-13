@@ -32,7 +32,7 @@ public class CompanyController {
     public String getAllCompanies(@RequestParam(defaultValue = "0") int page, Model model) {
         //Page<Company> companiesPage = companyService.findAll(page, pageSize);
 
-        model.addAttribute("companiesPage", companiesPage);
+        //model.addAttribute("companiesPage", companiesPage);
         return "companies/list";
     }
 

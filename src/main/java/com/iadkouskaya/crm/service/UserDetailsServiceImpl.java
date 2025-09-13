@@ -1,7 +1,7 @@
 package com.iadkouskaya.crm.service;
 
 import com.iadkouskaya.crm.model.entity.User;
-import com.iadkouskaya.crm.repository.UserRepository;
+//import com.iadkouskaya.crm.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,21 +14,25 @@ import java.util.Collections;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private UserRepository userRepository;
-
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
-        );
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
+    //    private UserRepository userRepository;
+//
+//    public UserDetailsServiceImpl(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//
+//        return new org.springframework.security.core.userdetails.User(
+//                user.getEmail(),
+//                user.getPassword(),
+//                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"))
+//        );
+//    }
 }

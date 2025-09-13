@@ -5,10 +5,10 @@ spring:
   application:
     name: crm
   datasource:
-    username: crm_system_59u0_user
-    password: XpxNsoQIRYHnF8FdbQ0lTXmrziQbWDX7
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 #    url: jdbc:postgresql://localhost:5432/crm_system
-    url: jdbc:postgresql://dpg-d32hklidbo4c73aelrq0-a:5432/crm_system_59u0
+    url: ${SPRING_DATASOURCE_URL}
   jpa:
     hibernate:
       ddl-auto: update

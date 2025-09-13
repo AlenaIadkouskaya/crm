@@ -3,7 +3,7 @@ package com.iadkouskaya.crm.model.entity;
 import jakarta.persistence.*;
 import org.springframework.web.multipart.MultipartFile;
 
-//@Entity
+@Entity
 @Table(name = "companies")
 public class Company {
     @Id

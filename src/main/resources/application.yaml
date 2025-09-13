@@ -1,26 +1,35 @@
 server:
-  port: ${PORT:8080}
-#  port: 8066
+#  port: ${PORT:8080}
+  port: 8066
 spring:
   application:
     name: crm
   datasource:
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-#    username: crm_system_59u0_user
-#    password: XpxNsoQIRYHnF8FdbQ0lTXmrziQbWDX7
+#    username: ${SPRING_DATASOURCE_USERNAME}
+#    password: ${SPRING_DATASOURCE_PASSWORD}
 #    url: jdbc:postgresql://localhost:5432/crm_system
-    url: ${SPRING_DATASOURCE_URL}
+#    username: postgres
+#    password: admin
+#    url: ${SPRING_DATASOURCE_URL}
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
   liquibase:
-    enabled: false
+    enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 thymeleaf:
   cache: false
 logging:

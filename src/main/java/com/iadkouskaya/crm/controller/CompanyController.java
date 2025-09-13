@@ -30,9 +30,9 @@ public class CompanyController {
 
     @GetMapping
     public String getAllCompanies(@RequestParam(defaultValue = "0") int page, Model model) {
-        //Page<Company> companiesPage = companyService.findAll(page, pageSize);
+        Page<Company> companiesPage = companyService.findAll(page, pageSize);
 
-        //model.addAttribute("companiesPage", companiesPage);
+        model.addAttribute("companiesPage", companiesPage);
         return "companies/list";
     }
 
@@ -48,31 +48,31 @@ public class CompanyController {
 
         try {
             if (!logoFile.isEmpty()) {
-                //String logoPath = companyService.saveLogo(logoFile);
-                //company.setLogo(logoPath);
+                String logoPath = companyService.saveLogo(logoFile);
+                company.setLogo(logoPath);
             }
-            //companyService.save(company);
+            companyService.save(company);
         } catch (Exception e) {
             model.addAttribute("company", company);
             model.addAttribute("errorMessage", e.getMessage());
             return "companies/form";
         }
 
-        return "redirect:/companies?page=";// + companyService.getLastPage(pageSize);
+        return "redirect:/companies?page=" + companyService.getLastPage(pageSize);
     }
 
     @PostMapping("/delete/{id}")
     public String deleteCompany(@PathVariable Long id,
                                 @RequestParam(defaultValue = "0") int page) {
-        //companyService.deleteById(id);
+        companyService.deleteById(id);
         return "redirect:/companies?page=" + page;
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-//        Company company = companyService.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid company Id:" + id));
-//        model.addAttribute("company", company);
+        Company company = companyService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid company Id:" + id));
+        model.addAttribute("company", company);
         return "companies/form";
     }
 

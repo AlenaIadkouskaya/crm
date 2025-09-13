@@ -44,7 +44,7 @@ databaseChangeLog:
                   name: email
                   type: VARCHAR(255)
               - column:
-                  name: logo_path
+                  name: logo
                   type: VARCHAR(255)
               - column:
                   name: website

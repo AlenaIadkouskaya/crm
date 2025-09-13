@@ -10,6 +10,9 @@ spring:
 #    url: jdbc:postgresql://localhost:5432/crm_system
     url: ${SPRING_DATASOURCE_URL}
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true

@@ -46,7 +46,11 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .permitAll()
                 )
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**")
+                )
                 .headers(headers -> headers
+                        .frameOptions(frame -> frame.disable())
                         .contentSecurityPolicy(csp ->
                                 csp.policyDirectives("frame-ancestors 'self'"))
                 );

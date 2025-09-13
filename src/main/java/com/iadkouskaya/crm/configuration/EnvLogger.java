@@ -22,6 +22,9 @@ public class EnvLogger {
 
     @PostConstruct
     public void logEnv() {
+        System.out.println("spring.datasource.url = " + datasourceUrl);
+        System.out.println("spring.username.url = " + datasourceUsername);
+        System.out.println("spring.password.url = " + datasourcePassword);
         logger.info("spring.datasource.url = {}", datasourceUrl);
         logger.info("spring.datasource.username = {}", datasourceUsername);
         logger.info("spring.datasource.password = {}", datasourcePassword.equals("NOT SET") ? "NOT SET" : "***");

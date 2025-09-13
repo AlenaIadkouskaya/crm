@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.util.Optional;
 
 public interface CompanyService {
-    Page<Company> findAll(int page, int size);
-    void save(Company company);
-    String saveLogo(MultipartFile logoFile) throws IOException;
-    void deleteById(Long id);
-    Optional<Company> findById(Long id);
-    long count();
-    int getLastPage(int pageSize);
+//    Page<Company> findAll(int page, int size);
+//    void save(Company company);
+//    String saveLogo(MultipartFile logoFile) throws IOException;
+//    void deleteById(Long id);
+//    Optional<Company> findById(Long id);
+//    long count();
+//    int getLastPage(int pageSize);
 }

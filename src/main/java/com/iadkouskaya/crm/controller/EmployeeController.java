@@ -26,24 +26,24 @@ public class EmployeeController {
     public String getEmployeesByCompany(@PathVariable Long companyId,
                                         @RequestParam(defaultValue = "0") int page,
                                         Model model) {
-        Page<Employee> employeesPage = employeeService.findByCompanyId(companyId, page, pageSize);
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
-
-        model.addAttribute("employeesPage", employeesPage);
-        model.addAttribute("company", company);
+//        Page<Employee> employeesPage = employeeService.findByCompanyId(companyId, page, pageSize);
+//        Company company = companyService.findById(companyId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+//
+//        model.addAttribute("employeesPage", employeesPage);
+//        model.addAttribute("company", company);
         return "employees/list";
     }
 
     @GetMapping("/companies/{companyId}/employees/new")
     public String showAddEmployeeForm(@PathVariable Long companyId, Model model) {
-        Employee employee = new Employee();
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
-
-        employee.setCompany(company);
-        model.addAttribute("employee", employee);
-        model.addAttribute("company", company);
+//        Employee employee = new Employee();
+//        Company company = companyService.findById(companyId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+//
+//        employee.setCompany(company);
+//        model.addAttribute("employee", employee);
+//        model.addAttribute("company", company);
 
         return "employees/form";
     }
@@ -51,11 +51,11 @@ public class EmployeeController {
     @PostMapping("/companies/{companyId}/employees")
     public String saveEmployee(@PathVariable Long companyId,
                                @ModelAttribute Employee employee) {
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
-
-        employee.setCompany(company);
-        employeeService.save(employee);
+//        Company company = companyService.findById(companyId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+//
+//        employee.setCompany(company);
+//        employeeService.save(employee);
 
         return "redirect:/companies/" + companyId + "/employees";
     }
@@ -63,7 +63,7 @@ public class EmployeeController {
     @PostMapping("/companies/{companyId}/employees/{employeeId}/delete")
     public String deleteEmployee(@PathVariable Long companyId,
                                  @PathVariable Long employeeId) {
-        employeeService.deleteById(employeeId);
+        //employeeService.deleteById(employeeId);
         return "redirect:/companies/" + companyId + "/employees";
     }
 
@@ -71,18 +71,18 @@ public class EmployeeController {
     public String showEditEmployeeForm(@PathVariable Long companyId,
                                        @PathVariable Long employeeId,
                                        Model model) {
-        Employee employee = employeeService.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pracownika o ID: " + employeeId));
-
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
-
-        if (!employee.getCompany().getId().equals(companyId)) {
-            throw new IllegalArgumentException("Pracownik nie należy do tej firmy.");
-        }
-
-        model.addAttribute("employee", employee);
-        model.addAttribute("company", company);
+//        Employee employee = employeeService.findById(employeeId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pracownika o ID: " + employeeId));
+//
+//        Company company = companyService.findById(companyId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+//
+//        if (!employee.getCompany().getId().equals(companyId)) {
+//            throw new IllegalArgumentException("Pracownik nie należy do tej firmy.");
+//        }
+//
+//        model.addAttribute("employee", employee);
+//        model.addAttribute("company", company);
 
         return "employees/form";
     }
@@ -91,19 +91,19 @@ public class EmployeeController {
     public String updateEmployee(@PathVariable Long companyId,
                                  @PathVariable Long employeeId,
                                  @ModelAttribute Employee updatedEmployee) {
-        Employee existingEmployee = employeeService.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pracownika o ID: " + employeeId));
-
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
-
-        existingEmployee.setFirstName(updatedEmployee.getFirstName());
-        existingEmployee.setLastName(updatedEmployee.getLastName());
-        existingEmployee.setEmail(updatedEmployee.getEmail());
-        existingEmployee.setPhone(updatedEmployee.getPhone());
-        existingEmployee.setCompany(company);
-
-        employeeService.save(existingEmployee);
+//        Employee existingEmployee = employeeService.findById(employeeId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pracownika o ID: " + employeeId));
+//
+//        Company company = companyService.findById(companyId)
+//                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+//
+//        existingEmployee.setFirstName(updatedEmployee.getFirstName());
+//        existingEmployee.setLastName(updatedEmployee.getLastName());
+//        existingEmployee.setEmail(updatedEmployee.getEmail());
+//        existingEmployee.setPhone(updatedEmployee.getPhone());
+//        existingEmployee.setCompany(company);
+//
+//        employeeService.save(existingEmployee);
 
         return "redirect:/companies/" + companyId + "/employees";
     }

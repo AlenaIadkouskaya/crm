@@ -9,10 +9,11 @@ import java.util.Optional;
 
 public interface CompanyService {
     Page<Company> findAll(int page, int size);
-    void save(Company company);
+    void save(Company company, MultipartFile logoFile) throws IOException;
     String saveLogo(MultipartFile logoFile) throws IOException;
     void deleteById(Long id);
-    Optional<Company> findById(Long id);
+    Company findById(Long id);
     long count();
     int getLastPage(int pageSize);
+    boolean isValid(Company company);
 }

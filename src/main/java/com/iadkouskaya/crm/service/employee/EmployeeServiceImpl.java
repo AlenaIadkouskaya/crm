@@ -2,12 +2,11 @@ package com.iadkouskaya.crm.service.employee;
 
 import com.iadkouskaya.crm.model.entity.Employee;
 import com.iadkouskaya.crm.repository.EmployeeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -30,12 +29,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteById(Long employeeId) {
+        if (!employeeRepository.existsById(employeeId)) {
+            throw new EntityNotFoundException("Nie znaleziono pracownika do usunięcia o ID: " + employeeId);
+        }
         employeeRepository.deleteById(employeeId);
     }
 
     @Override
-    public Optional<Employee> findById(Long id) {
-        return employeeRepository.findById(id);
+    public Employee findById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono pracownika o ID: " + id));
     }
 
+    @Override
+    public Employee findEmployeeInCompany(Long companyId, Long employeeId) {
+        Employee employee = findById(employeeId);
+        if (!employee.getCompany().getId().equals(companyId)) {
+            throw new EntityNotFoundException("Pracownik nie należy do tej firmy.");
+        }
+        return employee;
+    }
+
+    @Override
+    public long countByCompanyId(Long companyId) {
+        return employeeRepository.countByCompanyId(companyId);
+    }
 }

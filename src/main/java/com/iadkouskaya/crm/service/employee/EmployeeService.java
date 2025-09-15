@@ -12,5 +12,7 @@ public interface EmployeeService {
 
     void deleteById(Long employeeId);
 
-    Optional<Employee> findById(Long id);
+    Employee findById(Long id);
+    Employee findEmployeeInCompany(Long companyId, Long employeeId);
+    long countByCompanyId(Long companyId);
 }

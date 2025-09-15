@@ -27,8 +27,7 @@ public class EmployeeController {
                                         @RequestParam(defaultValue = "0") int page,
                                         Model model) {
         Page<Employee> employeesPage = employeeService.findByCompanyId(companyId, page, pageSize);
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+        Company company = companyService.findById(companyId);
 
         model.addAttribute("employeesPage", employeesPage);
         model.addAttribute("company", company);
@@ -38,8 +37,7 @@ public class EmployeeController {
     @GetMapping("/companies/{companyId}/employees/new")
     public String showAddEmployeeForm(@PathVariable Long companyId, Model model) {
         Employee employee = new Employee();
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+        Company company = companyService.findById(companyId);
 
         employee.setCompany(company);
         model.addAttribute("employee", employee);
@@ -51,8 +49,7 @@ public class EmployeeController {
     @PostMapping("/companies/{companyId}/employees")
     public String saveEmployee(@PathVariable Long companyId,
                                @ModelAttribute Employee employee) {
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+        Company company = companyService.findById(companyId);
 
         employee.setCompany(company);
         employeeService.save(employee);
@@ -71,15 +68,8 @@ public class EmployeeController {
     public String showEditEmployeeForm(@PathVariable Long companyId,
                                        @PathVariable Long employeeId,
                                        Model model) {
-        Employee employee = employeeService.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pracownika o ID: " + employeeId));
-
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
-
-        if (!employee.getCompany().getId().equals(companyId)) {
-            throw new IllegalArgumentException("Pracownik nie należy do tej firmy.");
-        }
+        Employee employee = employeeService.findEmployeeInCompany(companyId, employeeId);
+        Company company = employee.getCompany();
 
         model.addAttribute("employee", employee);
         model.addAttribute("company", company);
@@ -91,11 +81,9 @@ public class EmployeeController {
     public String updateEmployee(@PathVariable Long companyId,
                                  @PathVariable Long employeeId,
                                  @ModelAttribute Employee updatedEmployee) {
-        Employee existingEmployee = employeeService.findById(employeeId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono pracownika o ID: " + employeeId));
+        Employee existingEmployee = employeeService.findById(employeeId);
 
-        Company company = companyService.findById(companyId)
-                .orElseThrow(() -> new IllegalArgumentException("Nie znaleziono firmy o ID: " + companyId));
+        Company company = companyService.findById(companyId);
 
         existingEmployee.setFirstName(updatedEmployee.getFirstName());
         existingEmployee.setLastName(updatedEmployee.getLastName());

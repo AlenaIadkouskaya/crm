@@ -1,4 +1,4 @@
-package com.iadkouskaya.crm.model.entity;
+package com.iadkouskaya.crm.model.entity.entity;
 
 import jakarta.persistence.*;
 

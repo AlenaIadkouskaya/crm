@@ -1,7 +1,6 @@
-package com.iadkouskaya.crm.model.entity;
+package com.iadkouskaya.crm.model.entity.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity

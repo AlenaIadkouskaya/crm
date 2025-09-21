@@ -1,6 +1,6 @@
 package com.iadkouskaya.crm.repository;
 
-import com.iadkouskaya.crm.model.entity.User;
+import com.iadkouskaya.crm.model.entity.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

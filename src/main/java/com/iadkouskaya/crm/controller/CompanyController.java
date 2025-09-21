@@ -1,6 +1,7 @@
 package com.iadkouskaya.crm.controller;
 
-import com.iadkouskaya.crm.model.entity.Company;
+import com.iadkouskaya.crm.model.entity.dto.CompanyDTO;
+import com.iadkouskaya.crm.model.entity.entity.Company;
 import com.iadkouskaya.crm.service.company.CompanyService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,8 @@ public class CompanyController {
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
-        Company company = new Company();
-        model.addAttribute("company", company);
+        CompanyDTO companyDTO = new CompanyDTO(null, null, null, null, null, null);
+        model.addAttribute("company", companyDTO);
         return "companies/form";
     }
 
@@ -39,19 +40,19 @@ public class CompanyController {
     }
 
     @PostMapping
-    public String saveCompany(@ModelAttribute Company company,
+    public String saveCompany(@ModelAttribute CompanyDTO companyDTO,
                               @RequestParam("logoFile") MultipartFile logoFile,
                               Model model) {
 
-        if (!companyService.isValid(company)) {
-            model.addAttribute("company", company);
+        if (!companyService.isValid(companyDTO)) {
+            model.addAttribute("company", companyDTO);
             return "companies/form";
         }
 
         try {
-            companyService.save(company, logoFile);
+            companyService.save(companyDTO, logoFile);
         } catch (Exception e) {
-            model.addAttribute("company", company);
+            model.addAttribute("company", companyDTO);
             model.addAttribute("errorMessage", e.getMessage());
             return "companies/form";
         }
@@ -77,9 +78,30 @@ public class CompanyController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
-        Company company = companyService.findById(id);
-        model.addAttribute("company", company);
+        CompanyDTO companyDTO = companyService.getCompanyDTOById(id);
+        model.addAttribute("company", companyDTO);
         return "companies/form";
+    }
+    @PostMapping("/{id}")
+    public String updateCompany(@PathVariable Long id,
+                                @ModelAttribute CompanyDTO companyDTO,
+                                @RequestParam("logoFile") MultipartFile logoFile,
+                                Model model) {
+
+        if (!companyService.isValid(companyDTO)) {
+            model.addAttribute("company", companyDTO);
+            return "companies/form";
+        }
+
+        try {
+            companyService.update(id, companyDTO, logoFile);
+        } catch (Exception e) {
+            model.addAttribute("company", companyDTO);
+            model.addAttribute("errorMessage", e.getMessage());
+            return "companies/form";
+        }
+
+        return "redirect:/companies?page=" + companyService.getLastPage(pageSize);
     }
 
 }

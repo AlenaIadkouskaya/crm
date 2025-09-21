@@ -1,6 +1,6 @@
 package com.iadkouskaya.crm.repository;
 
-import com.iadkouskaya.crm.model.entity.Employee;
+import com.iadkouskaya.crm.model.entity.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

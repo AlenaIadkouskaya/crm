@@ -1,9 +1,12 @@
 package com.iadkouskaya.crm.service.company;
 
-import com.iadkouskaya.crm.model.entity.Company;
+import com.iadkouskaya.crm.mapper.CompanyMapper;
+import com.iadkouskaya.crm.model.entity.dto.CompanyDTO;
+import com.iadkouskaya.crm.model.entity.entity.Company;
 import com.iadkouskaya.crm.repository.CompanyRepository;
 import com.iadkouskaya.crm.service.employee.EmployeeService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,15 +27,17 @@ import java.util.UUID;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final EmployeeService employeeService;
+    private final CompanyMapper companyMapper;
     @Value("${upload.dir}")
     private String uploadDir;
     private static final int MIN_LOGO_WIDTH = 100;
     private static final int MIN_LOGO_HEIGHT = 100;
     private static final Set<String> ALLOWED_EXTENSIONS = Set.of(".jpg", ".jpeg", ".png", ".gif");
 
-    public CompanyServiceImpl(CompanyRepository companyRepository, EmployeeService employeeService) {
+    public CompanyServiceImpl(CompanyRepository companyRepository, EmployeeService employeeService, CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
         this.employeeService = employeeService;
+        this.companyMapper = companyMapper;
     }
 
     @Override
@@ -42,16 +47,34 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void save(Company company, MultipartFile logoFile) throws IOException {
-        if (!logoFile.isEmpty()) {
+    public void save(CompanyDTO companyDTO, MultipartFile logoFile) throws IOException {
+        CompanyDTO dtoWithLogo = handleLogo(companyDTO, logoFile);
+
+        Company company = toEntity(dtoWithLogo);
+
+        companyRepository.save(company);
+
+    }
+
+    private CompanyDTO handleLogo(CompanyDTO companyDTO, MultipartFile logoFile) throws IOException {
+        if (logoFile != null && !logoFile.isEmpty()) {
             String logoPath = saveLogo(logoFile);
-            company.setLogo(logoPath);
+
+            return new CompanyDTO(
+                    companyDTO.id(),
+                    companyDTO.name(),
+                    companyDTO.email(),
+                    logoPath,
+                    companyDTO.website(),
+                    logoFile
+            );
         }
-        if (company.getId() == null) {
-            companyRepository.save(company);
-        } else {
-            updateExistingCompany(company);
-        }
+        return companyDTO;
+    }
+
+
+    private Company toEntity(CompanyDTO companyDTO) {
+        return companyMapper.toEntity(companyDTO);
     }
 
     @Override
@@ -133,8 +156,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public boolean isValid(Company company) {
-        return company.getName() != null && !company.getName().isEmpty();
+    public boolean isValid(CompanyDTO company) {
+        return company.name() != null && !company.name().isEmpty();
     }
 
     private void updateExistingCompany(Company updated) {
@@ -150,5 +173,36 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         companyRepository.save(existing);
+    }
+    @Override
+    public CompanyDTO getCompanyDTOById(Long id) {
+        Company company = findById(id);
+        return companyMapper.toDTO(company);
+    }
+    @Override
+    @Transactional
+    public void update(Long id, CompanyDTO companyDTO, MultipartFile logoFile) throws IOException {
+        Company company = findExistingCompany(id);
+        updateCompanyFields(company, companyDTO);
+        updateCompanyLogo(company, logoFile);
+        companyRepository.save(company);
+    }
+
+    private Company findExistingCompany(Long id) {
+        return companyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Nie znaleziono firmy o ID: " + id));
+    }
+
+    private void updateCompanyFields(Company company, CompanyDTO dto) {
+        company.setName(dto.name());
+        company.setEmail(dto.email());
+        company.setWebsite(dto.website());
+    }
+
+    private void updateCompanyLogo(Company company, MultipartFile logoFile) throws IOException {
+        if (logoFile != null && !logoFile.isEmpty()) {
+            String logoPath = saveLogo(logoFile);
+            company.setLogo(logoPath);
+        }
     }
 }

@@ -8,11 +8,10 @@
 <body>
 <div class="container mt-5">
     <h2 th:text="'Pracownicy firmy: ' + ${company.name}"></h2>
+
     <div class="d-flex justify-content-between align-items-center mb-3">
         <a th:href="@{/companies}" class="btn btn-secondary">← Powrót do listy firm</a>
-        <a th:href="@{/companies/{companyId}/employees/new(companyId=${company.id})}" class="btn btn-success">
-            + Dodaj pracownika
-        </a>
+        <a th:href="@{/companies/{companyId}/employees/new(companyId=${company.id})}" class="btn btn-success">+ Dodaj pracownika</a>
     </div>
 
     <table class="table table-bordered">
@@ -45,7 +44,7 @@
         </tr>
         </tbody>
     </table>
-
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
     <nav>
         <ul class="pagination">
             <li th:classappend="${employeesPage.first} ? 'disabled'">

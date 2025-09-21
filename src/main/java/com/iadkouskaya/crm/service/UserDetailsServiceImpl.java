@@ -1,6 +1,6 @@
 package com.iadkouskaya.crm.service;
 
-import com.iadkouskaya.crm.model.entity.User;
+import com.iadkouskaya.crm.model.entity.entity.User;
 import com.iadkouskaya.crm.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

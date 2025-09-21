@@ -1,4 +1,4 @@
-# CRM Application - Test Task Implementation
+# CRM Application
 
 ## Technologies Used
 
